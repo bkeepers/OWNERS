@@ -16,11 +16,10 @@ The syntax of the `OWNERS` file is, roughly:
 lines  := (\s* line? \s* "\n")*
 
 line    := directive
-          | "per-file" \s+ glob "=" directive
           | comment
 
 directive := "set noparent"
-                |  email_address
+                |  email_address (\s* glob)*
                 |  "*"
 
 glob      := [a-zA-Z0-9_-*?]+
@@ -28,13 +27,11 @@ glob      := [a-zA-Z0-9_-*?]+
 comment   := "#" [^"\n"]*
 ```
 
-Email addresses must follow the `foo@chromium.org` short form. If a user's email is one of the email_addresses in the file, the user is considered an "OWNER" for all files in the directory.
+Email addresses must follow the `foo@chromium.org` short form. If a user's email is one of the email_addresses in the file, the user is considered an "OWNER" for all files in the directory. A `*` (wildcard) indicates that all committers are owners.
 
-A `*` (wildcard) indicates that all committers are owners.
+If a glob is specified, the line only applies to files in that directory that match the filename glob. Filename globs follow the simple UNIX shell conventions (`*` and `?` are supported). Relative and absolute paths are not allowed (globs may only refer to the files in the current directory).
 
-If the `per-file` directive is used, the line only applies to files in that directory that match the filename glob specified. Filename globs follow the simple UNIX shell conventions (`*` and `?` are supported). Relative and absolute paths are not allowed (globs may only refer to the files in the current directory).
-
-If the `set noparent` directive used, then only entries in this `OWNERS` file apply to files in this directory; if the `set noparent` directive is not used, then entries in `OWNERS` files in parent directories also apply (up until a `set noparent` is encountered). If `per-file glob=set noparent` is used, then global directives are ignored for the glob, and only the `per-file` owners are used for files matching that glob.
+If the `set noparent` directive used, then only entries in this `OWNERS` file apply to files in this directory; if the `set noparent` directive is not used, then entries in `OWNERS` files in parent directories also apply (up until a `set noparent` is encountered).
 
 Example:
 
@@ -43,7 +40,7 @@ Example:
 foo@chromium.org
 bar@chromium.org
 
-per-file *.gypi=baz@chromium.org
+baz@chromium.org *.gypi
 %
 ```
 
