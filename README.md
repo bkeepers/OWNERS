@@ -19,15 +19,20 @@ line    := directive
           | comment
 
 directive := "set noparent"
-                |  email_address (\s* glob)*
+                |  user (\s* glob)*
                 |  "*"
+
+user := email_address
+          | username
+
+username  := @[a-zA-Z0-9-]+
 
 glob      := [a-zA-Z0-9_-*?]+
 
 comment   := "#" [^"\n"]*
 ```
 
-Email addresses must follow the `foo@chromium.org` short form. If a user's email is one of the email_addresses in the file, the user is considered an "OWNER" for all files in the directory. A `*` (wildcard) indicates that all committers are owners.
+A `username` is a GitHub username (e.g. @bkeepers). Email addresses must follow the `foo@chromium.org` short form. The specified `user` is considered an "OWNER" for all files in the directory. A `*` (wildcard) indicates that all committers are owners.
 
 If a glob is specified, the line only applies to files in that directory that match the filename glob. Filename globs follow the simple UNIX shell conventions (`*` and `?` are supported). Relative and absolute paths are not allowed (globs may only refer to the files in the current directory).
 
@@ -37,8 +42,8 @@ Example:
 
 ```
 % cat dir/`OWNERS`
-foo@chromium.org
-bar@chromium.org
+user@example.com
+@username
 
 baz@chromium.org *.gypi
 %
