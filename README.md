@@ -1,12 +1,16 @@
 # `OWNERS` files
 
-`OWNERS` files are a way of specifying who is responsible for maintaining a project or specific files in a project. It may be used to notify maintainers of modifications or to enforce review.
+Knowing who owns a project or piece of code is often tribal knowledge, which makes it difficult to know who to ask for help, feedback, or review. `OWNERS` files specify who is responsible for maintaining a project or specific files in a project, and may be used to notify maintainers of modifications or to enforce review.
 
-**For example:**
+For example:
 
-You want to change code in `src/chrome/browser/tab_contents/tab_contents_delegate.h`. Who do you ask for help, feedback, or review?
+```
+$ cat OWNERS
+user@example.com
+@username
 
-Anyone named in `src/chrome/browser/tab_contents/OWNERS`, or `src/chrome/browser/OWNERS`, and so on up the directory tree. If no `OWNERS` file exists in the directory containing a modified file, crawl up the hierarchy to find the nearest one.
+baz@chromium.org *.gypi
+```
 
 ## `OWNERS` file format
 
@@ -37,17 +41,6 @@ A `username` is a GitHub username (e.g. @bkeepers). Email addresses must follow 
 If a glob is specified, the line only applies to files in that directory that match the filename glob. Filename globs follow the simple UNIX shell conventions (`*` and `?` are supported). Relative and absolute paths are not allowed (globs may only refer to the files in the current directory).
 
 If the `set noparent` directive used, then only entries in this `OWNERS` file apply to files in this directory; if the `set noparent` directive is not used, then entries in `OWNERS` files in parent directories also apply (up until a `set noparent` is encountered).
-
-Example:
-
-```
-% cat dir/`OWNERS`
-user@example.com
-@username
-
-baz@chromium.org *.gypi
-%
-```
 
 ## Who should be in an `OWNERS` file?
 
