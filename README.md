@@ -1,6 +1,6 @@
 # `OWNERS` files
 
-Knowing who owns a project or piece of code is often tribal knowledge, which makes it difficult to know who to ask for help, feedback, or review. `OWNERS` files specify who is responsible for maintaining a project or specific files in a project, and may be used to notify maintainers of modifications or to enforce review.
+Knowing who owns a project or piece of code is often tribal knowledge, which makes it difficult to know who to ask for help, feedback, or review. `OWNERS` files specify who is responsible for maintaining a project or specific files in a project, and may be used to notify maintainers of modifications or to enforce approval in reviews.
 
 For example:
 
@@ -17,6 +17,7 @@ user@example.com
 
 # …and even limit to specific paths
 @org/js *.js
+@org/legal LICENSE*
 ```
 
 ## `OWNERS` file format
