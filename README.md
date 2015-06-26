@@ -6,10 +6,17 @@ For example:
 
 ```
 $ cat OWNERS
+# Specify owners by email address.
 user@example.com
+
+# …or GitHub username
 @username
 
-baz@chromium.org *.gypi
+# …or GitHub team
+@org/team
+
+# …and even limit to specific paths
+@org/js *.js
 ```
 
 ## `OWNERS` file format
