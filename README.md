@@ -24,23 +24,25 @@ user@example.com
 The syntax of the `OWNERS` file is, roughly:
 
 ```
-lines  := (\s* line? \s* "\n")*
+lines      := (\s* line? \s* "\n")*
 
-line    := directive
-          | comment
+line       := directive | comment
 
-directive := "set noparent"
-                |  user (\s* glob)*
-                |  "*"
+directive  := "set noparent"
+              |  identifier (\s* glob)*
+              |  "*"
 
-user := email_address
-          | username
+identifier := email_address
+             | username
+             | team
 
-username  := @[a-zA-Z0-9-]+
+username   := @[a-zA-Z0-9-]+
 
-glob      := [a-zA-Z0-9_-*?]+
+team       := @[a-zA-Z0-9-]+/[a-zA-Z0-9-]+
 
-comment   := "#" [^"\n"]*
+glob       := [a-zA-Z0-9_-*?]+
+
+comment    := "#" [^"\n"]*
 ```
 
 A `username` is a GitHub username (e.g. @bkeepers). Email addresses must follow the `foo@chromium.org` short form. The specified `user` is considered an "OWNER" for all files in the directory. A `*` (wildcard) indicates that all committers are owners.
