@@ -1,3 +1,4 @@
+require "owners/parser"
 require "owners/version"
 
 class Owners
