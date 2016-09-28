@@ -11,7 +11,7 @@ require_relative 'lexer.rb'
 
 class Parser < Racc::Parser
 
-module_eval(<<'...end parser.y/module_eval...', 'parser.y', 33)
+module_eval(<<'...end parser.y/module_eval...', 'parser.y', 26)
 
 def parse(string)
   scan_setup(string)
@@ -19,71 +19,66 @@ def parse(string)
   while token = next_token
     tokens << token
   end
-  tokens
+  tokens << [:END, nil]
 end
 ...end parser.y/module_eval...
 ##### State transition tables begin ###
 
 racc_action_table = [
-     6,     7,    11,     6,     7,    11,    12,    15,    13,    12,
-    16,    17,    18 ]
+     4,     6,     7,    13,     9,    10,    11,    12,    14 ]
 
 racc_action_check = [
-     0,     0,     0,     3,     3,     3,     0,    11,     1,     3,
-    13,    15,    17 ]
+     0,     0,     0,     8,     0,     0,     0,     1,    12 ]
 
 racc_action_pointer = [
-    -2,     8,   nil,     1,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,     2,   nil,    10,   nil,     5,   nil,     7,   nil ]
+    -2,     7,   nil,   nil,   nil,   nil,   nil,   nil,    -2,   nil,
+   nil,   nil,     8,   nil,   nil ]
 
 racc_action_default = [
-    -2,   -16,    -1,    -4,    -5,    -6,    -7,    -8,    -9,   -10,
-   -11,   -16,   -15,   -16,    -3,   -12,    19,   -16,   -13 ]
+    -2,   -13,    -1,    -3,    -4,    -5,    -6,    -7,    -8,   -10,
+   -11,   -12,   -13,    -9,    15 ]
 
 racc_goto_table = [
-     2,     1,   nil,    14 ]
+     1,     2,     3,     5,     8 ]
 
 racc_goto_check = [
-     2,     1,   nil,     2 ]
+     1,     2,     3,     4,     5 ]
 
 racc_goto_pointer = [
-   nil,     1,     0,   nil,   nil,   nil,   nil,   nil,   nil,   nil ]
+   nil,     0,     1,     2,     3,     4 ]
 
 racc_goto_default = [
-   nil,   nil,   nil,     3,     4,     5,     8,     9,    10,   nil ]
+   nil,   nil,   nil,   nil,   nil,   nil ]
 
 racc_reduce_table = [
   0, 0, :racc_error,
   1, 10, :_reduce_none,
   0, 10, :_reduce_none,
-  2, 11, :_reduce_none,
-  0, 11, :_reduce_none,
+  1, 11, :_reduce_none,
+  1, 11, :_reduce_none,
   1, 12, :_reduce_none,
   1, 12, :_reduce_none,
   1, 13, :_reduce_none,
   1, 13, :_reduce_none,
-  1, 13, :_reduce_none,
-  1, 15, :_reduce_none,
-  1, 15, :_reduce_none,
-  2, 16, :_reduce_none,
-  4, 17, :_reduce_none,
-  1, 18, :_reduce_none,
+  2, 13, :_reduce_none,
+  1, 14, :_reduce_none,
+  1, 14, :_reduce_none,
   1, 14, :_reduce_none ]
 
-racc_reduce_n = 16
+racc_reduce_n = 13
 
-racc_shift_n = 19
+racc_shift_n = 15
 
 racc_token_table = {
   false => 0,
   :error => 1,
-  :SET_NOPARENT => 2,
-  :ASTERISK => 3,
-  :MENTION => 4,
-  :STRING => 5,
-  :DIVIDER => 6,
-  :GLOB => 7,
-  :COMMENT => 8 }
+  :NEWLINE => 2,
+  :COMMENT => 3,
+  :SET_NOPARENT => 4,
+  :GLOB => 5,
+  :USERNAME => 6,
+  :TEAMNAME => 7,
+  :EMAIL => 8 }
 
 racc_nt_base = 9
 
@@ -108,23 +103,19 @@ Racc_arg = [
 Racc_token_to_s_table = [
   "$end",
   "error",
-  "SET_NOPARENT",
-  "ASTERISK",
-  "MENTION",
-  "STRING",
-  "DIVIDER",
-  "GLOB",
+  "NEWLINE",
   "COMMENT",
+  "SET_NOPARENT",
+  "GLOB",
+  "USERNAME",
+  "TEAMNAME",
+  "EMAIL",
   "$start",
   "target",
   "lines",
   "line",
   "directive",
-  "comment",
-  "identifier",
-  "username",
-  "team",
-  "glob" ]
+  "identifier" ]
 
 Racc_debug_parser = false
 
@@ -155,12 +146,6 @@ Racc_debug_parser = false
 # reduce 11 omitted
 
 # reduce 12 omitted
-
-# reduce 13 omitted
-
-# reduce 14 omitted
-
-# reduce 15 omitted
 
 def _reduce_none(val, _values, result)
   val[0]

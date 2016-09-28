@@ -3,26 +3,19 @@ rule
   target  : lines
           | /* nothing */
 
-  lines   : line lines
-          | /* nothing */
+  lines   : line
+          | NEWLINE
 
-  line    : directive | comment
+  line    : directive
+          | COMMENT
 
   directive  : SET_NOPARENT
-             | ASTERISK
              | identifier
+             | identifier GLOB
 
-  identifier : username
-             | team
-
-  username   : MENTION STRING
-
-  team       : MENTION STRING DIVIDER STRING
-
-  glob       : GLOB
-
-  comment    : COMMENT
-
+  identifier : USERNAME
+             | TEAMNAME
+             | EMAIL
 end
 
 ---- header ----
@@ -37,5 +30,5 @@ def parse(string)
   while token = next_token
     tokens << token
   end
-  tokens
+  tokens << [:END, nil]
 end

@@ -60,28 +60,25 @@ class Parser < Racc::Parser
       when (text = @ss.scan(/\"set/))
          action { [:SET_NOPARENT, text] }
 
-      when (text = @ss.scan(/\*/))
-         action { [:ASTERISK, text] }
+      when (text = @ss.scan(/[A-Z0-9a-z\._%\+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,6}/))
+         action { [:EMAIL, text] }
 
-      when (text = @ss.scan(/\@/))
-         action { [:MENTION, text] }
+      when (text = @ss.scan(/@[a-zA-Z0-9\-]+\/[a-zA-Z0-9\-]+/))
+         action { [:TEAMNAME, text] }
 
-      when (text = @ss.scan(/\//))
-         action { [:DIVIDER, text] }
+      when (text = @ss.scan(/@[a-zA-Z0-9\-]+/))
+         action { [:USERNAME, text] }
 
-      when (text = @ss.scan(/[a-zA-Z0-9\-]+/))
-         action { [:STRING, text] }
-
-      when (text = @ss.scan(/[a-zA-Z0-9_\-\*\?]+/))
+      when (text = @ss.scan(/[a-zA-Z0-9_\-\*\?\.]+/))
          action { [:GLOB, text] }
 
       when (text = @ss.scan(/\#/))
          action { [:COMMENT, text] }
 
-      when (text = @ss.scan(/\s+/))
-        ;
-
       when (text = @ss.scan(/\n/))
+         action { [:NEWLINE, ""] }
+
+      when (text = @ss.scan(/\s/))
         ;
 
       else
