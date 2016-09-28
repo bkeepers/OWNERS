@@ -57,14 +57,32 @@ class Parser < Racc::Parser
     token = case @state
     when nil
       case
+      when (text = @ss.scan(/\"set/))
+         action { [:SET_NOPARENT, text] }
+
+      when (text = @ss.scan(/\*/))
+         action { [:ASTERISK, text] }
+
+      when (text = @ss.scan(/\@/))
+         action { [:MENTION, text] }
+
+      when (text = @ss.scan(/\//))
+         action { [:DIVIDER, text] }
+
+      when (text = @ss.scan(/[a-zA-Z0-9\-]+/))
+         action { [:STRING, text] }
+
+      when (text = @ss.scan(/[a-zA-Z0-9_\-\*\?]+/))
+         action { [:GLOB, text] }
+
+      when (text = @ss.scan(/\#/))
+         action { [:COMMENT, text] }
+
       when (text = @ss.scan(/\s+/))
         ;
 
-      when (text = @ss.scan(/\d+/))
-         action { [:NUMBER, text.to_i] }
-
-      when (text = @ss.scan(/.|\n/))
-         action { [:TEXT, text] }
+      when (text = @ss.scan(/\n/))
+        ;
 
       else
         text = @ss.string[@ss.pos .. -1]

@@ -5,6 +5,10 @@ require "minitest/autorun"
 describe Owners::Parser do
   it "parses" do
     @parser = Owners::Parser.new
-    @parser.parse("u")
+    tokens = @parser.parse("@hello")
+    token = tokens.shift
+    assert_equal [:MENTION, "@"], token
+    token = tokens.shift
+    assert_equal [:NAME, "hello"], token
   end
 end
