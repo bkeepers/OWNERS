@@ -5,7 +5,7 @@ require "minitest/autorun"
 describe Owners do
   describe "for" do
     before do
-      @owners = Owners.new(<<-EOF)
+      @owners = Owners::File.new(<<-EOF)
         foo@example.com
         @owner
         @org/team
@@ -22,11 +22,11 @@ describe Owners do
     end
 
     it "returns teams with matching path" do
-      assert_equal ["@org/legal"], Owners.new("@org/legal LICENSE").for("LICENSE")
+      assert_equal ["@org/legal"], Owners::File.new("@org/legal LICENSE").for("LICENSE")
     end
 
     it "returns users matching any path" do
-      owners = Owners.new("@user *.rb *.py")
+      owners = Owners::File.new("@user *.rb *.py")
       assert_equal ["@user"], owners.for("foo.rb")
       assert_equal ["@user"], owners.for("foo.py")
     end
@@ -36,7 +36,7 @@ describe Owners do
     end
 
     it "ignores comments and newlines" do
-      assert_equal ["@owner"], Owners.new("# README\n\n\n@owner").for("README")
+      assert_equal ["@owner"], Owners::File.new("# README\n\n\n@owner").for("README")
     end
   end
 end

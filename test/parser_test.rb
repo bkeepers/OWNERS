@@ -4,7 +4,7 @@ require "minitest/autorun"
 
 describe Owners::Parser do
   it "parses" do
-    @parser = Parser.new
+    @parser = Owners::Parser.new
     tokens = @parser.parse("@hello")
     token = tokens.shift
     assert_equal [:USERNAME, "@hello"], token

@@ -9,7 +9,8 @@ require 'racc/parser.rb'
 
 require_relative 'lexer.rb'
 
-class Parser < Racc::Parser
+module Owners
+  class Parser < Racc::Parser
 
 module_eval(<<'...end parser.y/module_eval...', 'parser.y', 26)
 
@@ -25,13 +26,13 @@ end
 ##### State transition tables begin ###
 
 racc_action_table = [
-     4,     6,     7,    13,     9,    10,    11,    12,    14 ]
+     4,     6,     7,    12,     9,    10,    11,    13,    14 ]
 
 racc_action_check = [
-     0,     0,     0,     8,     0,     0,     0,     1,    12 ]
+     0,     0,     0,     1,     0,     0,     0,     8,    12 ]
 
 racc_action_pointer = [
-    -2,     7,   nil,   nil,   nil,   nil,   nil,   nil,    -2,   nil,
+    -2,     3,   nil,   nil,   nil,   nil,   nil,   nil,     2,   nil,
    nil,   nil,     8,   nil,   nil ]
 
 racc_action_default = [
@@ -151,4 +152,5 @@ def _reduce_none(val, _values, result)
   val[0]
 end
 
-end   # class Parser
+  end   # class Parser
+  end   # module Owners

@@ -1,4 +1,4 @@
-class Parser
+class Owners::Parser
 rule
   target  : lines
           | /* nothing */
