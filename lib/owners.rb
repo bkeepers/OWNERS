@@ -1,4 +1,3 @@
-require "owners/parser"
 require "owners/version"
 
 module Owners
@@ -48,3 +47,5 @@ module Owners
     end
   end
 end
+
+require "owners/parser"
