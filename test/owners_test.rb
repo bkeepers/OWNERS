@@ -38,5 +38,13 @@ describe Owners do
     it "ignores comments and newlines" do
       assert_equal ["@owner"], Owners::File.new("# README\n\n\n@owner").for("README")
     end
+
+    it "ignores tokens after comment mark" do
+      assert_equal [], Owners::File.new("# @owner").for("README")
+    end
+
+    it "ignores comments containing special characters" do
+      assert_equal ["@owner"], Owners::File.new("# R,E;A.D'M/E:\n\n@owner").for("README")
+    end
   end
 end
