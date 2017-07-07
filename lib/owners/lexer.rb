@@ -72,7 +72,7 @@ class Owners::Parser < Racc::Parser
       when (text = @ss.scan(/[a-zA-Z0-9_\-\*\?\.]+/))
          action { [:GLOB, text] }
 
-      when (text = @ss.scan(/\#/))
+      when (text = @ss.scan(/\#\s[^\"\n\"]*/))
          action { [:COMMENT, text] }
 
       when (text = @ss.scan(/\n/))

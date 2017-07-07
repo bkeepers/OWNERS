@@ -5,7 +5,7 @@ macro
   TEAMNAME          @[a-zA-Z0-9\-]+\/[a-zA-Z0-9\-]+
   USERNAME          @[a-zA-Z0-9\-]+
   GLOB              [a-zA-Z0-9_\-\*\?\.]+
-  COMMENT           \# [^\"\n\"]*
+  COMMENT           \#\s[^\"\n\"]*
   NEWLINE           \n
   WHITESPACE        \s
 rule
